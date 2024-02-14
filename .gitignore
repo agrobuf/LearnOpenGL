@@ -31,8 +31,11 @@
 *.out
 *.app
 
+# Clangd cache files
+.cache/
+
 # Conan build files
-./Environment/build/*
+Environment/build/*
 
 # CMake build files
-./CreatingAWindow/build/*
+CreatingAWindow/build/*
