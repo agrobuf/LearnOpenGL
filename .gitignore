@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# Conan build files
+./Environment/build/*
+
+# CMake build files
+./CreatingAWindow/build/*
