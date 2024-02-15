@@ -3,6 +3,8 @@
 #include <GLFW/glfw3.h>
 #include "Printer/printer.hpp"
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
 int main() {
 
     glfwInit(); // Initialize the GLFW library
@@ -20,6 +22,34 @@ int main() {
     }
     glfwMakeContextCurrent(window);
 
+    // Set the callback for resizing the window
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    // GLAD manages function pointers for OpenGL. We need to initialize GLAD
+    // before we call any OpenGL function.
+    // We pass GLAD the function to load the address of the OpenGL function
+    // pointers. GLFW provides 'glfwGetProcAddress' that defines the correct
+    // function based on the OS.
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return -1;
+    }
+
+    // Render loop
+    while (!glfwWindowShouldClose(window)) {
+        // Will swap the color buffer that is used for the render iteration and
+        // show it as output to the screen.
+        glfwSwapBuffers(window);
+
+        // Checks if any events are triggered. Events are registered to via a 
+        // callback.
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
     return 0;
 }
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
+}
