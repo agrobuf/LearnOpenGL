@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "Printer/printer.hpp"
 
+void process_input(GLFWwindow* window);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 int main() {
@@ -37,17 +38,32 @@ int main() {
 
     // Render loop
     while (!glfwWindowShouldClose(window)) {
+        // Input
+        process_input(window);
+
+        // Render
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // glfw: swap buffers and poll IO events
+        // Checks if any events are triggered. Events are registered to via a 
+        // callback.
+        glfwPollEvents();
+
         // Will swap the color buffer that is used for the render iteration and
         // show it as output to the screen.
         glfwSwapBuffers(window);
 
-        // Checks if any events are triggered. Events are registered to via a 
-        // callback.
-        glfwPollEvents();
     }
 
     glfwTerminate();
     return 0;
+}
+
+void process_input(GLFWwindow* window) {
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE)) {
+        glfwSetWindowShouldClose(window, true);
+    }
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
